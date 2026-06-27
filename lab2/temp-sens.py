@@ -14,7 +14,7 @@ SENSOR_ID = "22-0000001ccc5f"
 DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
 
 # Initialize LCD
-lcd = CharLCD(numbering_mode=GPIO.BCM, cols=16, rows=2, pin_rs=26, pin_e=19, pins_data=[21, 20, 16, 12])
+lcd = CharLCD(numbering_mode=GPIO.BCM, cols=16, rows=2, pin_rs=25, pin_e=24, pins_data=[23, 8, 7, 14])
 
 N = 20 # Iterations
 threshold = 23.00 # Threshold temperature in Celsius
