@@ -1,14 +1,25 @@
 import time
+import csv
 import RPi.GPIO as GPIO
 from RPLCD.gpio import CharLCD
-## Temperature Sensor and LCD Display
 
+""" TEMPERATURE SENSOR AND LCD DISPLAY
+    - This script reads temperature data from a DS18B20 sensor and displays it on a 16x2 LCD.
+    -"""
+
+# --- SETUP ---
+# Temperature sensor configuration
 SENSOR_ID = "22-0000001ccc5f"
 DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
 
-# Initialize LCD (using 4-bit mode and the GPIO pin mapping)
+# Initialize LCD
 lcd = CharLCD(numbering_mode=GPIO.BCM, cols=16, rows=2, pin_rs=26, pin_e=19, pins_data=[21, 20, 16, 12])
 
+N = 20 # Iterations
+threshold = 23.00 # Threshold temperature in Celsius
+th_pin = 18 # Pin for threshold indicator
+
+# --- FUNCTIONS ---
 def read_raw_temp():
     """Reads the raw temperature data from the sensor's device file."""
     with open(DEVICE_PATH, "r") as f:
@@ -27,14 +38,29 @@ def read_temp():
         temp_c = float(temp_string) / 1000.0
         return temp_c
     
+def check_threshold(temp):
+    """Checks if the temperature exceeds the threshold and activates the indicator pin if it does."""
+    if temp > threshold:
+        GPIO.output(th_pin, GPIO.HIGH)  # Turn on indicator
+    else:
+        GPIO.output(th_pin, GPIO.LOW)   # Turn off indicator
+
+def log_temperature(temp):
+    """Logs the temperature to a CSV file."""
+    with open("temperature_log.csv", mode="a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([time.strftime("%Y-%m-%d %H:%M:%S"), temp])
 try:
     lcd.clear()
-    while True:
+    for _ in range(N):
         temperature = read_temp()
         lcd.cursor_pos = (0, 0)
         lcd.write_string(f"Temp: {temperature:.2f} C")  
         print(f"Current Temperature: {temperature:.2f} °C")
+        check_threshold(temperature)
+        log_temperature(temperature)
         time.sleep(1)
+
 except KeyboardInterrupt:
     lcd.clear()
     print("Temperature reading stopped.")
