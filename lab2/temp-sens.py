@@ -1,5 +1,6 @@
 import time
 import csv
+import os
 import RPi.GPIO as GPIO
 from RPLCD.gpio import CharLCD
 
@@ -19,6 +20,8 @@ N = 20 # Iterations
 threshold = 23.00 # Threshold temperature in Celsius
 th_pin = 18 # Pin for threshold indicator
 GPIO.setup(th_pin, GPIO.OUT)  # Set up the threshold indicator pin as output
+cwd = os.getcwd()  # Get the current working directory
+path = os.path.join(cwd, "temperature_log.csv")  # Path to the CSV log file
 
 # --- FUNCTIONS ---
 def read_raw_temp():
@@ -40,11 +43,15 @@ def read_temp():
         return temp_c
     
 def check_threshold(temp):
-    """Checks if the temperature exceeds the threshold and activates the indicator pin if it does."""
-    if temp > threshold:
+    """Checks if the temperature exceeds the threshold and blinks the indicator led if it does."""
+    while temp > threshold:
         GPIO.output(th_pin, GPIO.HIGH)  # Turn on indicator
-    else:
+        time.sleep(0.5)
         GPIO.output(th_pin, GPIO.LOW)   # Turn off indicator
+        time.sleep(0.5)
+        if temp <= threshold:
+            GPIO.output(th_pin, GPIO.LOW)
+            break
 
 def log_temperature(temp):
     """Logs the temperature to a CSV file."""
