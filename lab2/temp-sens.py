@@ -62,6 +62,10 @@ def log_temperature(temp):
         writer.writerow([time.strftime("%Y-%m-%d %H:%M:%S"), temp])
 try:
     lcd.clear()
+    with open(path, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Timestamp", "Temperature (C)"])  # Write header to CSV
+        
     for _ in range(N):
         temperature = read_temp()
         lcd.cursor_pos = (0, 0)
