@@ -20,7 +20,6 @@ N = 20 # Iterations
 threshold = 23.00 # Threshold temperature in Celsius
 th_pin = 18 # Pin for threshold indicator
 GPIO.setup(th_pin, GPIO.OUT)  # Set up the threshold indicator pin as output
-led_state = 0
 cwd = os.getcwd()  # Get the current working directory
 path = os.path.join(cwd, "temperature_log.csv")  # Path to the CSV log file
 
@@ -45,6 +44,7 @@ def read_temp():
     
 def check_threshold(temp):
     """Checks if the temperature exceeds the threshold and blinks the indicator led if it does."""
+    led_state = 0
     if temp > threshold:
         led_state = not led_state  # Toggle LED state
         GPIO.output(th_pin, led_state)  # Turn on indicator
