@@ -20,6 +20,7 @@ N = 20 # Iterations
 threshold = 23.00 # Threshold temperature in Celsius
 th_pin = 18 # Pin for threshold indicator
 GPIO.setup(th_pin, GPIO.OUT)  # Set up the threshold indicator pin as output
+led_state = 0
 cwd = os.getcwd()  # Get the current working directory
 path = os.path.join(cwd, "temperature_log.csv")  # Path to the CSV log file
 
@@ -44,18 +45,19 @@ def read_temp():
     
 def check_threshold(temp):
     """Checks if the temperature exceeds the threshold and blinks the indicator led if it does."""
-    while temp > threshold:
-        GPIO.output(th_pin, GPIO.HIGH)  # Turn on indicator
-        time.sleep(0.5)
-        GPIO.output(th_pin, GPIO.LOW)   # Turn off indicator
-        time.sleep(0.5)
-        if temp <= threshold:
-            GPIO.output(th_pin, GPIO.LOW)
-            break
+    if temp > threshold:
+        led_state = not led_state  # Toggle LED state
+        GPIO.output(th_pin, led_state)  # Turn on indicator
+        time.sleep(0.2)  # Blink duration
+        led_state = not led_state  # Toggle LED state
+        GPIO.output(th_pin, led_state)
+        time.sleep(0.2)
+    else:
+        GPIO.output(th_pin, GPIO.LOW)  # Turn off indicator
 
 def log_temperature(temp):
     """Logs the temperature to a CSV file."""
-    with open("temperature_log.csv", mode="a", newline="") as file:
+    with open(path, mode="a", newline="") as file:
         writer = csv.writer(file)
         writer.writerow([time.strftime("%Y-%m-%d %H:%M:%S"), temp])
 try:
