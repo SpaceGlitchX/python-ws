@@ -1,3 +1,4 @@
+import time
 import RPi.GPIO as GPIO
 from RPLCD.gpio import CharLCD
 
@@ -13,8 +14,11 @@ try:
     while True:
         lcd.cursor_pos = (0, 0)
         lcd.write_string(f"LCD Display Test")
+        print("LCD Display Test")
+        time.sleep(1)
 
 except KeyboardInterrupt:
     lcd.clear()
     lcd.close(clear=True)
     GPIO.cleanup()  
+    print("LCD Display Test stopped.")
