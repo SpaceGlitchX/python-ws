@@ -6,7 +6,7 @@ SENSOR_ID = "22-0000001ccc5f"
 DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
 
 # Initialize LCD (using 4-bit mode and the GPIO pin mapping)
-lcd = CharLCD(cols=16, rows=2, pin_rs=25, pin_e=24, pins_data=[23, 8, 15, 14], numbering_mode='BOARD')
+lcd = CharLCD(cols=16, rows=2, pin_rs=25, pin_e=24, pins_data=[23, 8, 15, 14], numbering_mode='GPIO.BOARD')
 
 def read_raw_temp():
     """Reads the raw temperature data from the sensor's device file."""
