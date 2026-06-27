@@ -18,6 +18,7 @@ lcd = CharLCD(numbering_mode=GPIO.BCM, cols=16, rows=2, pin_rs=26, pin_e=19, pin
 N = 20 # Iterations
 threshold = 23.00 # Threshold temperature in Celsius
 th_pin = 18 # Pin for threshold indicator
+GPIO.setup(th_pin, GPIO.OUT)  # Set up the threshold indicator pin as output
 
 # --- FUNCTIONS ---
 def read_raw_temp():
