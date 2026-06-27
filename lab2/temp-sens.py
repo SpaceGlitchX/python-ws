@@ -61,7 +61,9 @@ try:
         check_threshold(temperature)
         log_temperature(temperature)
         time.sleep(1)
-
+    
+    lcd.clear()
+    print("Temperature reading stopped.")
 except KeyboardInterrupt:
     lcd.clear()
     print("Temperature reading stopped.")
