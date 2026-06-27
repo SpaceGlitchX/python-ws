@@ -1,8 +1,12 @@
 import time
+from RPLCD.gpio import CharLCD
 ## Temperature Sensor and LCD Display
 
 SENSOR_ID = "22-0000001ccc5f"
 DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
+
+# Initialize LCD (using 4-bit mode and the GPIO pin mapping)
+lcd = CharLCD(cols=16, rows=2, pin_rs=25, pin_e=24, pins_data=[23, 8, 15, 14], numbering_mode='BOARD')
 
 def read_raw_temp():
     """Reads the raw temperature data from the sensor's device file."""
@@ -23,9 +27,13 @@ def read_temp():
         return temp_c
     
 try:
+    lcd.clear()
     while True:
         temperature = read_temp()
+        lcd.cursor_pos = (0, 0)
+        lcd.write_string(f"Temp: {temperature:.2f} C")  
         print(f"Current Temperature: {temperature:.2f} °C")
         time.sleep(1)
 except KeyboardInterrupt:
+    lcd.clear()
     print("Temperature reading stopped.")
