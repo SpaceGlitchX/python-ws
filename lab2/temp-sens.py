@@ -44,14 +44,13 @@ def read_temp():
     
 def check_threshold(temp):
     """Checks if the temperature exceeds the threshold and blinks the indicator led if it does."""
-    led_state = 0
     if temp > threshold:
-        led_state = not led_state  # Toggle LED state
-        GPIO.output(th_pin, led_state)  # Turn on indicator
-        time.sleep(0.2)  # Blink duration
-        led_state = not led_state  # Toggle LED state
-        GPIO.output(th_pin, led_state)
-        time.sleep(0.2)
+        blink_count = 5  # Number of times to blink the LED
+        for _ in range(blink_count):
+            GPIO.output(th_pin, GPIO.HIGH)  # Turn on indicator
+            time.sleep(0.05)
+            GPIO.output(th_pin, GPIO.LOW)  # Turn off indicator
+            time.sleep(0.05)
     else:
         GPIO.output(th_pin, GPIO.LOW)  # Turn off indicator
 
@@ -65,7 +64,7 @@ try:
     with open(path, mode="w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["Timestamp", "Temperature (C)"])  # Write header to CSV
-        
+
     for _ in range(N):
         temperature = read_temp()
         lcd.cursor_pos = (0, 0)
