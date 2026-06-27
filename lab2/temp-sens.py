@@ -58,7 +58,7 @@ def log_temperature(temp):
     """Logs the temperature to a CSV file."""
     with open(path, mode="a", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow([time.strftime("%Y-%m-%d %H:%M:%S"), temp])
+        writer.writerow([time.strftime("%H:%M:%S"), temp])
 try:
     lcd.clear()
     with open(path, mode="w", newline="") as file:
