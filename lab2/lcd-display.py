@@ -8,5 +8,13 @@ from RPLCD.gpio import CharLCD
 
 lcd = CharLCD(numbering_mode=GPIO.BCM, cols=16, rows=2, pin_rs=26, pin_e=19, pins_data=[21, 20, 16, 12])
 
-lcd.cursor_pos = (0, 0)
-lcd.write_string(f"LCD Display Test")  
+try:
+    lcd.clear()
+    while True:
+        lcd.cursor_pos = (0, 0)
+        lcd.write_string(f"LCD Display Test")
+
+except KeyboardInterrupt:
+    lcd.clear()
+    lcd.close(clear=True)
+    GPIO.cleanup()  
