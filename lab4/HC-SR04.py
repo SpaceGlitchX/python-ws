@@ -57,17 +57,18 @@ def measure_distance():
 
 def measurement_1():
     """Performs a single distance measurement and compares with measurement entered by user"""
-    try:
-        while True:
-            x_meas = measure_distance()
-            print(f"Measured distance: {x_meas:.3f} cm")
-            x_real = float(input("Enter the actual distance (in centimeters): "))
-            error = abs(x_meas - x_real) * 100
-            print(f"Error: {error:.3f} %")
-            if error > 10:
-                print("Warning: Large measurement error detected!")
-    except KeyboardInterrupt:
-        print("Exiting Measurement 1.")
+    esc = False
+    while not esc:
+        x_meas = measure_distance()
+        print(f"Measured distance: {x_meas:.3f} cm")
+        x_real = float(input("Enter the actual distance (in centimeters): "))
+        error = abs(x_meas - x_real) * 100
+        print(f"Error: {error:.3f} %")
+        if error > 10:
+            print("Warning: Large measurement error detected!")
+        if input("Press 'q' to quit or any other key to continue: ") == 'q':
+            esc = True
+    
 
 def measurement_2():
     """Performs multiple distance measurements and logs the data to a CSV file."""
