@@ -17,7 +17,7 @@ y_temp = []
 
 N = 300 # Iterations
 cwd = os.getcwd()  # Get the current working directory
-path = os.path.join(cwd, "temperature_samples(9bit).csv")  # Path to the CSV log file
+path = os.path.join(cwd, "temperature_samples(12bit).csv")  # Path to the CSV log file
 
 # --- FUNCTIONS ---
 def read_raw_temp():
@@ -61,8 +61,8 @@ try:
     plt.plot(x_time, y_temp)
     plt.xlabel("Time (s)")
     plt.ylabel("Temperature (C)")
-    plt.title("Temperature vs Time (9-bit Resolution)")
-    plt.savefig("temperature_plot(9bit).png")  # Save the plot as an image
+    plt.title("Temperature vs Time (12-bit Resolution)")
+    plt.savefig("temperature_plot(12bit).png")  # Save the plot as an image
     plt.show()
     
     print("Temperature reading stopped.")
