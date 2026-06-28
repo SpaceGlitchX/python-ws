@@ -18,8 +18,7 @@ GYRO_ZOUT_H  = 0x47
 TEMP_OUT_H = 0x41
 
 # Set sample rate
-Fs = 1, 5, 10, 50  # Sample rates in Hz
-N = Fs*10  # Number of iterations for data logging (10 seconds of data collection)
+Fs = [1, 5, 10, 50]  # Sample rates in Hz
 
 # Function to read data from specified memory registers.
 def read_data(addr):
@@ -48,7 +47,7 @@ bus.write_byte_data(MPU_I2C_ADDR, 0x38, 1)
 
 try:
 
-    for Fs in [1, 5, 10, 50]:  # Iterate through the sample rates
+    for freq in Fs:  # Iterate through the sample rates
         cwd = os.getcwd()  # Get the current working directory
         path = os.path.join(cwd, f"mpu6050_data_{Fs}Hz.csv")  # Path to the CSV log file
         
@@ -58,6 +57,7 @@ try:
             writer = csv.writer(file)
             writer.writerow(["Timestamp", "Ax", "Ay", "Az", "Gx", "Gy", "Gz", "Tt"])  # Write header to CSV
         start_time = time.time()  # Record the start time
+        N = freq*10  # Number of iterations for data logging (10 seconds of data collection)
 
         # Iterate for a given range - define the variable NUM_IT
         for x in range(N):
