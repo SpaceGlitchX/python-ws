@@ -14,10 +14,10 @@ DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
 
 x_time = []
 y_temp = []
-
+res = 12 # Resolution of the temperature sensor
 N = 300 # Iterations
 cwd = os.getcwd()  # Get the current working directory
-path = os.path.join(cwd, "temperature_samples(12bit).csv")  # Path to the CSV log file
+path = os.path.join(cwd, f"temperature_samples({res}bit).csv")  # Path to the CSV log file
 
 # --- FUNCTIONS ---
 def read_raw_temp():
@@ -38,22 +38,25 @@ def read_temp():
         temp_c = float(temp_string) / 1000.0
         return temp_c
     
-def log_temperature(temp):
+def log_temperature(temp, elapsed_time):
     """Logs the temperature to a CSV file."""
     with open(path, mode="a", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow([time.strftime("%H:%M:%S"), temp])
+        writer.writerow([elapsed_time, temp])
 try:
+    
     with open(path, mode="w", newline="") as file:
         writer = csv.writer(file)
+        writer.writerow(["Resolution", f"{res}-bit"])  # Write resolution to CSV
         writer.writerow(["Timestamp", "Temperature (C)"])  # Write header to CSV
     start_time = time.time()  # Record the start time
 
     for _ in range(N):
         temperature = read_temp()
         print(f"Current Temperature: {temperature:.2f} °C")
-        log_temperature(temperature)
-        x_time.append(time.time() - start_time)
+        elapsed_time = time.time() - start_time
+        log_temperature(temperature, elapsed_time)
+        x_time.append(elapsed_time)
         y_temp.append(temperature)
         time.sleep(0.1)
     
@@ -61,8 +64,8 @@ try:
     plt.plot(x_time, y_temp)
     plt.xlabel("Time (s)")
     plt.ylabel("Temperature (C)")
-    plt.title("Temperature vs Time (12-bit Resolution)")
-    plt.savefig("temperature_plot(12bit).png")  # Save the plot as an image
+    plt.title(f"Temperature vs Time ({res}-bit Resolution)")
+    plt.savefig(f"temperature_plot({res}bit).png")  # Save the plot as an image
     plt.show()
     
     print("Temperature reading stopped.")

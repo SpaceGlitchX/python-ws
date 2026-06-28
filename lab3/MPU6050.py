@@ -7,6 +7,7 @@ import csv
     - This script reads accelerometer and gyroscope data from the MPU6050 sensor and logs it to a CSV file.
     - Reads for sample rates of 1Hz, 5Hz, 10Hz and 50Hz for 10s"""
 
+# ---- SETUP ---
 #Fill in register info (Use Hex addresses)
 MPU_I2C_ADDR = 0x68
 ACCEL_XOUT_H = 0x3B
@@ -20,7 +21,7 @@ TEMP_OUT_H = 0x41
 # Set sample rate
 Fs = [1, 5, 10, 50]  # Sample rates in Hz
 
-# Function to read data from specified memory registers.
+# --- FUNCTIONS ---
 def read_data(addr):
     """Reads data from the specified memory register address of the MPU6050 sensor."""
     # Left shift high data by 8 bits and concatenate with low data for 16-bit measurement
