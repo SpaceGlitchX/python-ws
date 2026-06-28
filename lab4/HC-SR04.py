@@ -55,6 +55,16 @@ def measure_distance():
 
     return x_distance
 
+def test():
+    """Continuously measures distance and prints it to the console."""
+    try:
+        while True:
+            distance = measure_distance()
+            print(f"Measured distance: {distance:.3f} cm")
+            time.sleep(0.5)  # Delay between measurements
+    except KeyboardInterrupt:
+        print("Exiting test mode.")
+
 def measurement_1():
     """Performs a single distance measurement and compares with measurement entered by user"""
     while True:
