@@ -55,14 +55,14 @@ try:
         log_temperature(temperature)
         x_time.append(time.time() - start_time)
         y_temp.append(temperature)
-        time.sleep(1)
+        time.sleep(0.5)
     
     # Plot the temperature data
     plt.plot(x_time, y_temp)
     plt.xlabel("Time (s)")
     plt.ylabel("Temperature (C)")
     plt.title("Temperature vs Time")
-    plt.savefig(os.path.join(cwd, "temperature_plot(12bit).png"))  # Save the plot as an image
+    plt.savefig("temperature_plot(12bit).png")  # Save the plot as an image
     plt.show()
     
     print("Temperature reading stopped.")
