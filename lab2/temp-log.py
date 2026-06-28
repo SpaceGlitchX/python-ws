@@ -62,7 +62,7 @@ try:
     plt.xlabel("Time (s)")
     plt.ylabel("Temperature (C)")
     plt.title("Temperature vs Time")
-    plt.savefig("temperature_plot(12bit).png")  # Save the plot as an image
+    plt.savefig(os.path.join(cwd, "temperature_plot(12bit).png"))  # Save the plot as an image
     plt.show()
     
     print("Temperature reading stopped.")
