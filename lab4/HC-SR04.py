@@ -152,6 +152,9 @@ try:
         measurement_2()
     elif mode == "3":
         measurement_3()
+    elif mode == "test":
+        test()
+    
 except KeyboardInterrupt:
     print("\nExiting program.")
 
