@@ -14,7 +14,7 @@ DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
 
 x_time = []
 y_temp = []
-res = 12 # Resolution of the temperature sensor
+res = 9 # Resolution of the temperature sensor
 N = 300 # Iterations
 cwd = os.getcwd()  # Get the current working directory
 path = os.path.join(cwd, f"temperature_samples({res}bit).csv")  # Path to the CSV log file
