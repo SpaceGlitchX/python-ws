@@ -12,7 +12,7 @@ lcd = CharLCD(numbering_mode=GPIO.BCM, cols=16, rows=2, pin_rs=25, pin_e=24, pin
 try:
     lcd.clear()
     while True:
-        lcd.cursor_pos = (2, 0)
+        lcd.cursor_pos = (0, 0)
         lcd.write_string(f"LCD Display Test")
         print("LCD Display Test")
         time.sleep(1)
