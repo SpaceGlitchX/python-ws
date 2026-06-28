@@ -148,18 +148,22 @@ try:
         print("Press Ctrl+C to exit at any time.")
         mode = input("Enter the mode number (1, 2, or 3): ")
         
-        mode = mode.strip()  # Remove any leading/trailing whitespace
-        if mode == "1":
-            measurement_1()
-        elif mode == "2":
-            measurement_2()
-        elif mode == "3":
-            measurement_3()
-        elif mode == "test":
-            test()
-        else:
-            print("Invalid selection. Please enter 1, 2, or 3.")
-    
+        match mode:
+            case "1":
+                print("measurement_1()")
+                measurement_1()
+            case "2":
+                print("measurement_2()")
+                measurement_2() 
+            case "3":
+                print("measurement_3()") 
+                measurement_3()
+            case "test":
+                print("test()")
+                test()
+            case _:
+                print("Invalid selection. Please enter 1, 2, or 3.")
+       
     
 except KeyboardInterrupt:
     print("\nExiting program.")
