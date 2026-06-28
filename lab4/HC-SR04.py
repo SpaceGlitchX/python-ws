@@ -8,9 +8,9 @@ import os
 """
 # --- SETUP ---
 GPIO.setmode(GPIO.BCM)
-TRIG_PIN = 23  # GPIO pin for Trigger
-ECHO_PIN = 24  # GPIO pin for Echo
-LED_PIN = 18  # GPIO pin for LED indicator
+TRIG_PIN = 17  # GPIO pin for Trigger
+ECHO_PIN = 27  # GPIO pin for Echo
+LED_PIN = 22  # GPIO pin for LED indicator
 GPIO.setup(TRIG_PIN, GPIO.OUT)
 GPIO.setup(ECHO_PIN, GPIO.IN)
 GPIO.setup(LED_PIN, GPIO.OUT)
