@@ -57,8 +57,7 @@ def measure_distance():
 
 def measurement_1():
     """Performs a single distance measurement and compares with measurement entered by user"""
-    esc = False
-    while not esc:
+    while True:
         x_meas = measure_distance()
         print(f"Measured distance: {x_meas:.3f} cm")
         x_real = float(input("Enter the actual distance (in centimeters): "))
@@ -67,7 +66,7 @@ def measurement_1():
         if error > 10:
             print("Warning: Large measurement error detected!")
         if input("Press 'q' to quit or any other key to continue: ") == 'q':
-            esc = True
+            break
     
 
 def measurement_2():
@@ -130,14 +129,19 @@ def measurement_3():
                     
     data_file.close()
 
-print("Select a measurement mode:")
-print("1. Single measurement with user input")
-print("2. Multiple measurements with CSV logging")
-print("3. Polar measurements with CSV logging")
-mode = input("Enter the mode number (1, 2, or 3): ")
-if mode == "1":
-    measurement_1()
-elif mode == "2":
-    measurement_2()
-elif mode == "3":
-    measurement_3() 
+try:
+    print("Select a measurement mode:")
+    print("1. Single measurement with user input")
+    print("2. Multiple measurements with CSV logging")
+    print("3. Polar measurements with CSV logging")
+    print("Press Ctrl+C to exit at any time.")
+    mode = input("Enter the mode number (1, 2, or 3): ")
+    if mode == "1":
+        measurement_1()
+    elif mode == "2":
+        measurement_2()
+    elif mode == "3":
+        measurement_3()
+except KeyboardInterrupt:
+    print("\nExiting program.")
+
