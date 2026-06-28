@@ -37,11 +37,13 @@ def measure_distance():
     
     # Wait for ECHO pin to go high
     while GPIO.input(ECHO_PIN) == 0:
+        GPIO.output(LED_PIN, GPIO.HIGH)  # Turn on LED indicator
         time_start = time.time()
 
     # Wait for ECHO pin to go low
     while GPIO.input(ECHO_PIN) == 1:
         time_end = time.time()
+        GPIO.output(LED_PIN, GPIO.LOW)  # Turn off LED indicator
 
     # Calculate elapsed time and distance
     d_time = time_end - time_start
