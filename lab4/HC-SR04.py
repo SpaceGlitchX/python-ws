@@ -140,20 +140,26 @@ def measurement_3():
     data_file.close()
 
 try:
-    print("Select a measurement mode:")
-    print("1. Single measurement with user input")
-    print("2. Multiple measurements with CSV logging")
-    print("3. Polar measurements with CSV logging")
-    print("Press Ctrl+C to exit at any time.")
-    mode = input("Enter the mode number (1, 2, or 3): ")
-    if mode == "1":
-        measurement_1()
-    elif mode == "2":
-        measurement_2()
-    elif mode == "3":
-        measurement_3()
-    elif mode == "test":
-        test()
+    while True:
+        print("\n--- HC-SR04 Ultrasonic Sensor Measurement Modes ---")
+        print("1. Single measurement with user input")
+        print("2. Multiple measurements with CSV logging")
+        print("3. Polar measurements with CSV logging")
+        print("Press Ctrl+C to exit at any time.")
+        mode = input("\t\tEnter the mode number (1, 2, or 3): ")
+        
+        mode = mode.strip()  # Remove any leading/trailing whitespace
+        if mode == "1":
+            measurement_1()
+        elif mode == "2":
+            measurement_2()
+        elif mode == "3":
+            measurement_3()
+        elif mode == "test":
+            test()
+        else:
+            print("Invalid selection. Please enter 1, 2, or 3.")
+    
     
 except KeyboardInterrupt:
     print("\nExiting program.")
