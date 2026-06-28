@@ -47,7 +47,7 @@ def measure_distance():
 
     # Calculate elapsed time and distance
     d_time = time_end - time_start
-    x_distance = (d_time * Cs) / 2  # Distance in meters
+    x_distance = (d_time * Cs) / 2  # Distance in centimeters (cm)
 
     # Check if distance exceeds maximum distance
     if x_distance > MAX_DISTANCE:
@@ -67,21 +67,22 @@ def test():
 
 def measurement_1():
     """Performs a single distance measurement and compares with measurement entered by user"""
-    while True:
-        x_meas = measure_distance()
-        print(f"Measured distance: {x_meas:.3f} cm")
-        x_real = float(input("Enter the actual distance (in centimeters): "))
-        error = abs(x_meas - x_real) * 100
-        print(f"Error: {error:.3f} %")
-        if error > 10:
-            print("Warning: Large measurement error detected!")
-        if input("Press 'q' to quit or any other key to continue: ") == 'q':
-            break
+    try:    
+        while True:
+            x_meas = measure_distance()
+            print(f"Measured distance: {x_meas:.3f} cm")
+            x_real = float(input("Enter the actual distance (in centimeters): "))
+            error = abs(x_meas - x_real) * 100
+            print(f"Error: {error:.3f} %")
+            if error > 10:
+                print("Warning: Large measurement error detected!")
+                break
     
+    except KeyboardInterrupt:
+        print("Exiting Measurement 1.")
 
 def measurement_2():
     """Performs multiple distance measurements and logs the data to a CSV file."""
-
     try:
         for r in R_DISTANCES:
             print(f"Measuring distance at {r} cm...")
@@ -101,9 +102,9 @@ def measurement_2():
                 time.sleep(0.1)  # Delay between measurements
             print(f"Completed {N} measurements at {r} cm.")
     
-    
     except KeyboardInterrupt:
         print("Exiting Measurement 2.")
+        file.close()
 
 def measurement_3():
     """Performs a single distance measurement and logs the data to a CSV file."""
@@ -113,31 +114,20 @@ def measurement_3():
     # File header (distances in each column)
     data_file = open(path_a, "w")
     data_file.write("Distances (cm):,")
-    for ii in DISTANCES:
-        if ii == DISTANCES[-1]:
-            data_file.write(f"{ii}\n")
-        else:
-            data_file.write(f"{ii},")
-
-    # Loop through all angles and distances
-    for ii in ANGLES:
-        # Row index (angles)
-        data_file.write(f"{ii} degrees,")
-        for jj in DISTANCES:
-            print(f"Measuring distance at {jj} cm and {ii} degrees...")
-            while True:
-                input("\tHit enter when ready...")
-                dist = measure_distance()
-                print(f"\tMeasured distance: {dist:.3f} cm")
-                val = input("\t\tRecord this measurement? (1 = YES, 0 = NO) ")
-                if (int(val) == 1):
-                    if jj == DISTANCES[-1]:
-                        data_file.write(f"{dist}\n")
-                    else:       
-                        data_file.write(f"{dist},")
-                    break 
-                    
-    data_file.close()
+    try:
+        for ii in ANGLES:
+            if ii == ANGLES[-1]:
+                data_file.write(f"{ii} degrees\n")
+            else:
+                data_file.write(f"{ii} degrees,")
+        for ii in DISTANCES:
+            if ii == DISTANCES[-1]:
+                data_file.write(f"{ii}\n")
+            else:
+                data_file.write(f"{ii},")
+    except KeyboardInterrupt:
+        print("Exiting Measurement 3.")
+        data_file.close()
 
 try:
     while True:
