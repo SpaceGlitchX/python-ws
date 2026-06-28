@@ -55,7 +55,7 @@ try:
         log_temperature(temperature)
         x_time.append(time.time() - start_time)
         y_temp.append(temperature)
-        time.sleep(0.5)
+        time.sleep(0.1)
     
     # Plot the temperature data
     plt.plot(x_time, y_temp)
