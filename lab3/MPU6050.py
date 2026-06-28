@@ -81,7 +81,7 @@ try:
             log_data(elapsed_time, Ax, Ay, Az, Gx, Gy, Gz, Tt)
             
             # Sleep for sample period
-            time.sleep(1/Fs)
+            time.sleep(1/freq)
     print("Data logging completed.")
 except KeyboardInterrupt:
     print("Data logging stopped.")
