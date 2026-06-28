@@ -49,12 +49,13 @@ try:
 
     for freq in Fs:  # Iterate through the sample rates
         cwd = os.getcwd()  # Get the current working directory
-        path = os.path.join(cwd, f"mpu6050_data_{Fs}Hz.csv")  # Path to the CSV log file
+        path = os.path.join(cwd, f"mpu6050_data_{freq}Hz.csv")  # Path to the CSV log file
         
-        print(f"Logging data at {Fs}Hz for 10 seconds...")
+        print(f"Logging data at {freq}Hz for 10 seconds...")
 
         with open(path, mode="w", newline="") as file:
             writer = csv.writer(file)
+            writer.writerow([f"Sample Rate: {freq}Hz"])  # Write sample rate to CSV
             writer.writerow(["Timestamp", "Ax", "Ay", "Az", "Gx", "Gy", "Gz", "Tt"])  # Write header to CSV
         start_time = time.time()  # Record the start time
         N = freq*10  # Number of iterations for data logging (10 seconds of data collection)
