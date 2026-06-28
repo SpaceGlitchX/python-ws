@@ -15,7 +15,7 @@ DEVICE_PATH = f"/sys/bus/w1/devices/{SENSOR_ID}/w1_slave"
 x_time = []
 y_temp = []
 
-N = 200 # Iterations
+N = 300 # Iterations
 cwd = os.getcwd()  # Get the current working directory
 path = os.path.join(cwd, "temperature_samples(12bit).csv")  # Path to the CSV log file
 
@@ -61,7 +61,7 @@ try:
     plt.plot(x_time, y_temp)
     plt.xlabel("Time (s)")
     plt.ylabel("Temperature (C)")
-    plt.title("Temperature vs Time")
+    plt.title("Temperature vs Time (12-bit Resolution)")
     plt.savefig("temperature_plot(12bit).png")  # Save the plot as an image
     plt.show()
     
