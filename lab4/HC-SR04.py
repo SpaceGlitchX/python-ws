@@ -146,7 +146,7 @@ try:
         print("2. Multiple measurements with CSV logging")
         print("3. Polar measurements with CSV logging")
         print("Press Ctrl+C to exit at any time.")
-        mode = input("\t\tEnter the mode number (1, 2, or 3): ")
+        mode = input("Enter the mode number (1, 2, or 3): ")
         
         mode = mode.strip()  # Remove any leading/trailing whitespace
         if mode == "1":
