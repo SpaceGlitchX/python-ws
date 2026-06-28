@@ -34,16 +34,16 @@ def measure_distance():
     time.sleep(0.00001)
     # Pull TRIG pin low
     GPIO.output(TRIG_PIN, GPIO.LOW)
-   
-    # Record start time
-    while (GPIO.input(ECHO_PIN) == 0):
-        time_start = time.time()
-        GPIO.output(LED_PIN, GPIO.HIGH)  # Turn on LED
-    # STEP 2 and STEP 3:
-    # Wait for ECHO pin to pull low, record end time
-    while (GPIO.input(ECHO_PIN) == 1):
-        time_end = time.time()
-        GPIO.output(LED_PIN, GPIO.LOW)  # Turn off LED
+    
+    # Wait for ECHO pin to go high
+    while GPIO.input(ECHO_PIN) == 0:
+        pass
+    time_start = time.time()
+
+    # Wait for ECHO pin to go low
+    while GPIO.input(ECHO_PIN) == 1:
+        pass
+    time_end = time.time()
 
     # Calculate elapsed time and distance
     d_time = time_end - time_start
