@@ -115,21 +115,33 @@ def measurement_3():
     # File header (distances in each column)
     data_file = open(path_a, "w")
     data_file.write("Distances (cm):,")
+    for ii in DISTANCES:
+        if ii == DISTANCES[-1]:
+            data_file.write(str(ii)+"\n")
+        else:
+            data_file.write(str(ii)+",")
+
     try:
         for ii in ANGLES:
-            if ii == ANGLES[-1]:
-                data_file.write(f"{ii} degrees\n")
-            else:
-                data_file.write(f"{ii} degrees,")
-        for ii in DISTANCES:
-            if ii == DISTANCES[-1]:
-                data_file.write(f"{ii}\n")
-            else:
-                data_file.write(f"{ii},")
+            data_file.write(str(ii)+"deg,")
+            for jj in DISTANCES:
+                print(f"Measuring at {ii} and {jj} cm")
+                while True:
+                    input("\tHit enter when ready...")
+                    dist = measure_distance()
+                    print(f"\tMeasured distance = {dist} cm")
+                    val = input("\t\tRecord? (1 = y, 0 = n)")
+                    if (int(val)==1):
+                        if jj == DISTANCES[-1]:
+                            data_file.write(str(dist)+"\n")
+                        else:
+                            data_file.write(str(dist)+",")
+                        break
+        data_file.close()
     except KeyboardInterrupt:
         print("Exiting Measurement 3.")
-        data_file.close()
-
+        data_file.close()    
+       
 try:
     while True:
         print("\n--- HC-SR04 Ultrasonic Sensor Measurement Modes ---")
