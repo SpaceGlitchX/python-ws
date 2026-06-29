@@ -28,6 +28,7 @@ R_DISTANCES = [5, 10, 15]
 def measure_distance():
     """Measures the distance using the HC-SR04 ultrasonic sensor."""
     # STEP 1: start condition
+    GPIO.output(TRIG_PIN, GPIO.LOW)
     # Pull TRIG pin high
     GPIO.output(TRIG_PIN, GPIO.HIGH)
     # Pause for 10 us
