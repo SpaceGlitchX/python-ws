@@ -85,9 +85,11 @@ def measurement_1():
 def measurement_2():
     """Performs multiple distance measurements and logs the data to a CSV file."""
     try:
+        with open(path, mode="w", newline="") as file:
+                writer = csv.writer(file)
         for r in R_DISTANCES:
             print(f"Measuring distance at {r} cm...")
-            with open(path, mode="w", newline="") as file:
+            with open(path, mode="a", newline="") as file:
                 writer = csv.writer(file)
                 writer.writerow([f"Distance Measurement at {r} cm"])  # Write distance to CSV
                 writer.writerow(["Measurement Number", "Distance (cm)"])  # Write header to CSV
