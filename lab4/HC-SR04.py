@@ -56,6 +56,17 @@ def measure_distance():
 
     return x_distance
 
+def error_check(x_meas, x_real):
+    """Calculates the percentage error between measured and actual distances."""
+    if x_real == 0:
+        raise ValueError("Actual distance cannot be zero.")
+    error = (abs(x_meas - x_real) / x_real) * 100
+    print(f"Error: {error:.3f} %")
+    if error > 10:
+        x_meas = -1
+        print(f"Warning: Large measurement error detected!")
+    return x_meas, error
+
 def test():
     """Continuously measures distance and prints it to the console."""
     try:
@@ -73,11 +84,10 @@ def measurement_1():
             x_meas = measure_distance()
             print(f"Measured distance: {x_meas:.3f} cm")
             x_real = float(input("Enter the actual distance (in centimeters): "))
-            error = abs(x_meas - x_real) * 100
-            print(f"Error: {error:.3f} %")
-            if error > 10:
-                print("Warning: Large measurement error detected!")
-                break
+            
+            # Get error
+            x_ret, error = error_check(x_meas, x_real)
+            print(f"Measured distance: {x_meas:.3f} cm, Actual distance: {x_real:.3f} cm, Error: {error:.3f}, Recorded distance: {x_ret:.3f} cm")
     
     except KeyboardInterrupt:
         print("Exiting Measurement 1.")
@@ -131,13 +141,14 @@ def measurement_3():
                 while True:
                     input("\tHit enter when ready...")
                     dist = measure_distance()
-                    print(f"\tMeasured distance = {dist} cm")
+                    x_ret, error = error_check(dist, jj)
+                    print(f"\tMeasured distance = {x_ret} cm")
                     val = input("\t\tRecord? (1 = y, 0 = n)")
                     if (int(val)==1):
                         if jj == DISTANCES[-1]:
-                            data_file.write(str(dist)+"\n")
+                            data_file.write(str(x_ret)+"\n")
                         else:
-                            data_file.write(str(dist)+",")
+                            data_file.write(str(x_ret)+",")
                         break
         data_file.close()
     except KeyboardInterrupt:
