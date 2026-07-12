@@ -151,7 +151,7 @@ def measurement_3():
                             data_file.write(str(x_ret)+",")
                         break
                     else:
-                        print("Invalid input. Please enter 1 or 0.")
+                        print("")
         data_file.close()
     except KeyboardInterrupt:
         print("Exiting Measurement 3.")
