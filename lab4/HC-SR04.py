@@ -144,12 +144,17 @@ def measurement_3():
                     x_ret, error = error_check(dist, jj)
                     print(f"\tMeasured distance = {x_ret} cm")
                     val = input("\t\tRecord? (1 = y, 0 = n)")
-                    if (int(val)==1):
-                        if jj == DISTANCES[-1]:
-                            data_file.write(str(x_ret)+"\n")
+                    while True:
+                        if (int(val)==1):
+                            if jj == DISTANCES[-1]:
+                                data_file.write(str(x_ret)+"\n")
+                            else:
+                                data_file.write(str(x_ret)+",")
+                            break
                         else:
-                            data_file.write(str(x_ret)+",")
-                        break
+                            print("Invalid input. Please enter 1 or 0.")
+                    break
+                
         data_file.close()
     except KeyboardInterrupt:
         print("Exiting Measurement 3.")
