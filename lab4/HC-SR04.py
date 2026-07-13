@@ -112,7 +112,7 @@ def measurement_2():
                 with open(path, mode="a", newline="") as file:
                     writer = csv.writer(file)
                     writer.writerow([i+1, x_meas])  # Log measurement to CSV
-                time.sleep(0.1)  # Delay between measurements
+                time.sleep(0.5)  # Delay between measurements
             print(f"Completed {N} measurements at {r} cm.")
     
     except KeyboardInterrupt:
