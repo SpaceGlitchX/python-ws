@@ -11,7 +11,7 @@ print(f"Generating a {FREQ} Hz square wave on GPIO pin {GPIO_PIN}...")
 print("Press Ctrl+C to stop.")
 
 try:
-    lgpio.tx_square_wave(h, GPIO_PIN, FREQ)  # Start generating the square wave
+    lgpio.tx_pwm(h, GPIO_PIN, FREQ, 50)  # Start generating the square wave
     while True:
         time.sleep(1)  # Keep the program running
 
@@ -19,7 +19,7 @@ except KeyboardInterrupt:
     print("\nStopping signal...")
 
 finally:
-    lgpio.tx_cancel(h, GPIO_PIN)  # Stop generating the square wave
+    lgpio.tx_pwm(h, GPIO_PIN, 0, 50)  # Stop generating the square wave
     lgpio.gpio_free(h, GPIO_PIN)  # Close the GPIO chip
     lgpio.gpiochip_close(h)  # Close the GPIO chip
     print("Signal generation stopped.")
