@@ -2,7 +2,7 @@ import time
 import lgpio
 
 GPIO_PIN = 22
-FREQ = 100  # Frequency in Hz
+FREQ = 200  # Frequency in Hz
 
 h = lgpio.gpiochip_open(0)  # Open the GPIO chip
 lgpio.gpio_claim_output(h, GPIO_PIN)  # Claim the GPIO pin for output
