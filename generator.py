@@ -2,7 +2,7 @@ import time
 import lgpio
 
 GPIO_PIN = 22
-FREQ = 200  # Frequency in Hz
+FREQ = 100  # Frequency in Hz
 DUTY_CYCLE = 50  # Duty cycle in percentage
 
 h = lgpio.gpiochip_open(0)  # Open the GPIO chip
