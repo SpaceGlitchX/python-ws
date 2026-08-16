@@ -53,6 +53,7 @@ def set_accel_FS(FS_g):
     
     # Check that the written value matches the read value. Return -1 if no match.
     if (AFS_SEL_write == AFS_SEL_read):
+        print(AFS_SEL_write, AFS_SEL_read)
         return AFS_SEL_read
     else:
         return -1
@@ -68,3 +69,5 @@ bus.write_byte_data(MPU_I2C_ADDR, 0x38, 1)
 # Part 1: Reading and writing to accelerometer full scale register
 for ii in AFS:
     AFS_SEL_val = set_accel_FS(ii)
+
+# Part 2: Set 
