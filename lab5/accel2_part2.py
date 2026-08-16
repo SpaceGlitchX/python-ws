@@ -98,7 +98,7 @@ for FS in ranges:
 
     set_gyro_FS(FS)
 
-    data = smbus.read_byte_data(
+    data = bus.read_byte_data(
         MPU_I2C_ADDR,
         GYRO_CONFIG
     )
