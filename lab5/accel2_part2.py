@@ -78,19 +78,7 @@ def set_gyro_FS(FS_rot):
 
 ranges = [250, 500, 1000, 2000]
 
-for FS in ranges:
 
-    set_gyro_FS(FS)
-
-    data = smbus.read_byte_data(
-        MPU_I2C_ADDR,
-        GYRO_CONFIG
-    )
-
-    selected = (data & 0x18) >> 3
-
-    print("Range:", FS, "deg/s")
-    print("FS_SEL:", selected)
 
 # Setup - leave this for now
 bus = smbus.SMBus(1)
@@ -105,3 +93,17 @@ for ii in AFS:
     AFS_SEL_val = set_accel_FS(ii)
 
 # Part 2: Set 
+
+for FS in ranges:
+
+    set_gyro_FS(FS)
+
+    data = smbus.read_byte_data(
+        MPU_I2C_ADDR,
+        GYRO_CONFIG
+    )
+
+    selected = (data & 0x18) >> 3
+
+    print("Range:", FS, "deg/s")
+    print("FS_SEL:", selected)
