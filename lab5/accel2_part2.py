@@ -76,7 +76,7 @@ def set_gyro_FS(FS_rot):
                          value << 3)
 
 
-    ranges = [250, 500, 1000, 2000]
+ranges = [250, 500, 1000, 2000]
 
 for FS in ranges:
 
