@@ -53,7 +53,7 @@ def set_accel_FS(FS_g):
     
     # Check that the written value matches the read value. Return -1 if no match.
     if (AFS_SEL_write == AFS_SEL_read):
-        print(AFS_SEL_write, AFS_SEL_read)
+        print("AFS_SEL_write: ", AFS_SEL_write ,"AFS_SEL_read: " ,AFS_SEL_read)
         return AFS_SEL_read
     else:
         return -1
