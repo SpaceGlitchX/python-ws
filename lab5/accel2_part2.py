@@ -9,10 +9,10 @@ ACCEL_ZOUT_H = 0x3F
 GYRO_XOUT_H  = 0x43
 GYRO_YOUT_H  = 0x45
 GYRO_ZOUT_H  = 0x47
-ACCEL_CONFIG = # Fill this in
-
+ACCEL_CONFIG = 0x1C
+GYRO_CONFIG  = 0x1B
 # Masks
-AFS_SEL_MASK = # Fill this in
+AFS_SEL_MASK = 0x18
 
 # Constants
 AFS = [2, 4, 8, 16]
@@ -41,12 +41,14 @@ def set_accel_FS(FS_g):
         return -1
     
     # Change the full-scale range here 
-    
+    bus.write_byte_data(MPU_I2C_ADDR, ACCEL_CONFIG, AFS_SEL_write << 3)
+
     # Allow settling time for write
     time.sleep(0.25) 
     
     # Read AFS_SEL from register with masking
-    AFS_SEL_read = # Fill this in...
+    AFS_SEL_read = (bus.read_byte_data(MPU_I2C_ADDR, ACCEL_CONFIG)& AFS_SEL_MASK) >> 3
+    
     print("The full-scale accelerometer range is +/- "+str(AFS[AFS_SEL_read])+" g.")
     
     # Check that the written value matches the read value. Return -1 if no match.
