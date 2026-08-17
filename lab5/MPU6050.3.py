@@ -13,10 +13,7 @@ import matplotlib.pyplot as plt
     - 50 Hz
     - 10 seconds
 """
-
-# --------------------------------------------------
 # SETUP
-# --------------------------------------------------
 
 MPU_I2C_ADDR = 0x68
 
@@ -39,23 +36,17 @@ Fs = 50
 # Measurement time
 duration = 10
 
-
-# --------------------------------------------------
-# FUNCTIONS
-# --------------------------------------------------
-
 def read_data(addr):
     """Reads 16-bit signed data from the MPU6050."""
 
     value = ((bus.read_byte_data(MPU_I2C_ADDR, addr) << 8) |
-             bus.read_byte_data(MPU_I2C_ADDR, addr + 1))
+            bus.read_byte_data(MPU_I2C_ADDR, addr + 1))
 
     # Convert to signed value
     if value > 32768:
         value = value - 65536
 
     return value
-
 
 def log_data(path, *args):
     """Logs sensor data to a CSV file."""
@@ -66,18 +57,10 @@ def log_data(path, *args):
 
         writer.writerow(list(args))
 
-
-# --------------------------------------------------
 # START I2C BUS
-# --------------------------------------------------
-
 bus = smbus.SMBus(1)
 
-
-# --------------------------------------------------
 # MPU6050 SETUP
-# --------------------------------------------------
-
 # Sample rate divider
 bus.write_byte_data(MPU_I2C_ADDR, 0x19, 7)
 
@@ -93,29 +76,16 @@ bus.write_byte_data(MPU_I2C_ADDR, ACCEL_CONFIG, 0)
 # Enable interrupt
 bus.write_byte_data(MPU_I2C_ADDR, 0x38, 1)
 
-
-# --------------------------------------------------
-# GYROSCOPE RANGES
-# --------------------------------------------------
-
+# GYROSCOPE RANGE
 gyro_ranges = [250, 2000]
 
-# Store results for plotting
-gyro_data = {}
-
-
-# --------------------------------------------------
-# MEASURE BOTH GYROSCOPE RANGES
-# --------------------------------------------------
-
+# MEASURE BOTH GYROSCOPE RANGE
 try:
 
     for gyro_range in gyro_ranges:
 
-        # ------------------------------------------
         # SET GYROSCOPE RANGE
-        # ------------------------------------------
-
+        
         if gyro_range == 250:
 
             # FS_SEL = 0
@@ -135,13 +105,9 @@ try:
             gyro_setting << 3
         )
 
-        # Allow setting to take effect
         time.sleep(0.25)
 
-
-        # ------------------------------------------
         # CREATE CSV FILE
-        # ------------------------------------------
 
         cwd = os.getcwd()
 
@@ -150,10 +116,7 @@ try:
             f"mpu6050_gyro_{gyro_range}dps_50Hz.csv"
         )
 
-
-        # ------------------------------------------
         # WRITE HEADER
-        # ------------------------------------------
 
         with open(path, mode="w", newline="") as file:
 
@@ -174,11 +137,7 @@ try:
                 "Gz"
             ])
 
-
-        # ------------------------------------------
         # DATA COLLECTION
-        # ------------------------------------------
-
         print()
         print(
             f"Logging gyroscope at +/-{gyro_range} deg/s "
@@ -192,7 +151,6 @@ try:
         gx_values = []
         time_values = []
 
-
         for x in range(N):
 
             # Read gyroscope
@@ -200,19 +158,12 @@ try:
             gyro_y = read_data(GYRO_YOUT_H)
             gyro_z = read_data(GYRO_ZOUT_H)
 
-
-            # --------------------------------------
-            # CONVERT TO deg/s
-            # --------------------------------------
-
             Gx = gyro_x / sensitivity
             Gy = gyro_y / sensitivity
             Gz = gyro_z / sensitivity
 
-
             # Timestamp
             elapsed_time = time.time() - start_time
-
 
             # Save data
             log_data(
@@ -223,62 +174,11 @@ try:
                 Gz
             )
 
-
-            # Store X-axis for comparison plot
-            time_values.append(elapsed_time)
-            gx_values.append(Gx)
-
-
             # Maintain 50 Hz
             time.sleep(1 / Fs)
-
-
-        # Store data
-        gyro_data[gyro_range] = (
-            time_values,
-            gx_values
-        )
-
-
         print(
             f"Completed +/-{gyro_range} deg/s measurement."
         )
-
-
-    # --------------------------------------------------
-    # PLOT BOTH GYROSCOPE MEASUREMENTS
-    # --------------------------------------------------
-
-    plt.figure()
-
-    plt.plot(
-        gyro_data[250][0],
-        gyro_data[250][1],
-        label="±250 deg/s"
-    )
-
-    plt.plot(
-        gyro_data[2000][0],
-        gyro_data[2000][1],
-        label="±2000 deg/s"
-    )
-
-    plt.xlabel("Time (s)")
-    plt.ylabel("Angular Velocity (deg/s)")
-
-    plt.title(
-        "MPU6050 Gyroscope Comparison"
-    )
-
-    plt.legend()
-    plt.grid()
-
-    plt.show()
-
-
-    print()
-    print("Part 5 data logging completed.")
-
 
 except KeyboardInterrupt:
 
