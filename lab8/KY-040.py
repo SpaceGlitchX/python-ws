@@ -3,7 +3,7 @@ import time
 
 # Constants
 CLK = 17
-SW = 23
+SW = 22
 DT = 27
 DURATION = 10
 
