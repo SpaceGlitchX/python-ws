@@ -41,6 +41,7 @@ def signal_event(channel):
     elif channel == SW:
         
         print("SW line trigger.")
+        Pos = 0
         # Reset position
         
     # Print logic states
