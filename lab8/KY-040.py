@@ -53,8 +53,8 @@ def signal_event(channel):
     print("Position = ", Pos, "degrees")
     
 # Define interrupt-driven events
-GPIO.add_event_detect(CLK, GPIO.FALLING, callback = signal_event, bouncetime = 400)
-GPIO.add_event_detect(SW, GPIO.FALLING, callback = signal_event, bouncetime = 400)
+GPIO.add_event_detect(CLK, GPIO.FALLING, callback = signal_event, bouncetime = 200)
+GPIO.add_event_detect(SW, GPIO.FALLING, callback = signal_event, bouncetime = 200)
 
 
 # Main loop
