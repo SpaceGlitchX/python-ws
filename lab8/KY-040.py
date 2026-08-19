@@ -13,7 +13,6 @@ GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-
 # Event-driven call-back
 def signal_event(channel):
     
@@ -23,7 +22,7 @@ def signal_event(channel):
         print("SW line triggered.")
         
     # Output logic states of SW, CLK, DT
-    print(f"SW = {SW}\nCLK = {CLK}\nDT = {DT}\n")
+    print(f"SW = {GPIO.input(SW)}\nCLK = {GPIO.input(CLK)}\nDT = {GPIO.input(DT)}\n")
 
 # Define interrupt-driven events
 GPIO.add_event_detect(CLK, GPIO.FALLING, callback = signal_event, bouncetime = 300)
