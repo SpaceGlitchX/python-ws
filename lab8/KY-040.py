@@ -18,7 +18,7 @@ def signal_event(channel):
     
     if GPIO.input(CLK):
         print("CLK line triggered.")
-    else:
+    elif GPIO.input(SW):
         print("SW line triggered.")
         
     # Output logic states of SW, CLK, DT
