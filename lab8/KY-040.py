@@ -18,7 +18,6 @@ GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-
 # Event-driven call-back
 def signal_event(channel):
     global Pos
