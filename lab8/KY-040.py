@@ -37,7 +37,7 @@ def signal_event(channel):
             
         else:
             # Clockwise
-            Pos -= DEGREES_PER_STEP
+            Pos = Pos-DEGREES_PER_STEP
     elif channel == SW:
         
         print("SW line trigger.")
